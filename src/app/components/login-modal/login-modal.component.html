@@ -1,6 +1,7 @@
 <div class="modal-overlay">
   <div class="modal-container">
     <div class="modal-header">
+      <h2>Innovameta</h2>
       <div class="icon-container">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -8,7 +9,7 @@
         </svg>
       </div>
       <h2>Bienvenido</h2>
-      <p>Ingrese su código de asesor o jefe para continuar</p>
+      <p>Ingrese código (Asesor / Jefe de Ventas) para continuar:</p>
     </div>
 
     <form (ngSubmit)="onSubmit()" class="modal-form">
@@ -26,7 +27,6 @@
           {{ errorMessage }}
         </div>
       </div>
-
       <button type="submit" class="submit-btn" [disabled]="isLoading">
         <span *ngIf="!isLoading">Ingresar</span>
         <span *ngIf="isLoading" class="loading-spinner">
@@ -37,6 +37,12 @@
           Validando...
         </span>
       </button>
+
+
     </form>
+
+    <img
+      src="https://media.licdn.com/dms/image/v2/D4E0BAQGqeXiK32a2DQ/company-logo_200_200/B4EZjIXaliGoAQ-/0/1755708238593/innovateq_colombia_logo?e=1767225600&v=beta&t=GBRePM9T_o6meku7ijZrcQcgj2R8A_MhW9LgxejtnKs"
+      alt="Ecommerce" class="icon-container" style="margin-top: 20px;">
   </div>
 </div>

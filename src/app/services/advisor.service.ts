@@ -9,6 +9,7 @@ export interface Advisor {
   currentCollection: number;
   collectionGoal: number;
   bossCode?: string; // Código del jefe a cargo
+  bossName?: string; // Nombre del jefe a cargo
 }
 
 export interface TeamStats {
@@ -46,8 +47,6 @@ export class AdvisorService {
           // Convert to array of arrays
           const data: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-          console.log('Raw Excel data:', data);
-
           // Map to Advisor interface using indices
           // Assuming: Col 0 = Code, Col 1 = Name, Col 2 = BossCode, Col 4 = Current, Col 5 = Goal
           this.advisors = data.slice(1).map(row => ({
@@ -55,10 +54,9 @@ export class AdvisorService {
             name: String(row[1] || ''),
             bossCode: row[2] ? String(row[2]) : undefined,
             currentCollection: Number(row[4] || 0),
-            collectionGoal: Number(row[5] || 0)
+            collectionGoal: Number(row[5] || 0),
+            bossName: row[3] ? String(row[3]) : undefined
           })).filter(a => a.code && a.code !== 'undefined' && a.code !== 'Cédula'); // Filter invalid rows
-
-          console.log('Advisors loaded from Excel:', this.advisors);
         };
         reader.readAsBinaryString(blob);
       },
@@ -79,12 +77,16 @@ export class AdvisorService {
 
     // Si no se encuentra el asesor pero es un código de jefe, crear un asesor virtual
     if (!advisor && isBossCode) {
+      const dataBoss = this.advisors.find(a => a.bossCode === code.trim());
+      console.log("🚧 ~ AdvisorService ~ validateCode ~ dataBoss:", dataBoss)
       advisor = {
         code: code.trim(),
-        name: `Jefe ${code.trim()}`,
+        name: dataBoss ? `${dataBoss.bossName}` : 'Jefe de Equipo',
         currentCollection: 0,
         collectionGoal: 0,
         bossCode: undefined
+
+
       };
       console.log('Created virtual boss advisor:', advisor);
     }

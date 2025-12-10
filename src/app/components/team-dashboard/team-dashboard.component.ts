@@ -22,6 +22,7 @@ export class TeamDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.advisorService.currentAdvisor$.subscribe(advisor => {
+      console.log("🚧 ~ TeamDashboardComponent ~ ngOnInit ~ advisor:", advisor)
       this.boss = advisor;
       if (advisor && this.advisorService.isBoss(advisor.code)) {
         this.teamStats = this.advisorService.getTeamStats(advisor.code);
